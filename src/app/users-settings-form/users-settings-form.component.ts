@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IUserSettings } from '../data/user-settings';
+import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-users-settings-form',
@@ -9,11 +10,11 @@ import { IUserSettings } from '../data/user-settings';
 export class UsersSettingsFormComponent implements OnInit {
 
   OriginaluserSettings: IUserSettings = {
-    name:'Jose',
-    emailOffers:true,
-    interfarceStyle:'dark',
-    subscriptionType:'Annual',
-    notes:'here are some notes..'
+    name:null,
+    emailOffers:null,
+    interfarceStyle:null,
+    subscriptionType:null,
+    notes:null
   };
 
   userSettings: IUserSettings ={...this.OriginaluserSettings}//copia de seguridad
@@ -22,5 +23,16 @@ export class UsersSettingsFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  onBlur(field:NgModel){
+    console.log("in onBlur" ,field.valid);
+    
+  }
+
+  onSubmit(form:NgForm){
+   console.log("in onSubmit: ", form.valid); 
+  }
+
+  
 
 }
