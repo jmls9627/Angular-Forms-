@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IUserSettings } from '../data/user-settings';
 import { NgForm, NgModel } from '@angular/forms';
+
+import { DataService } from '../data/data.service';
+import { IUserSettings } from '../data/user-settings';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-users-settings-form',
@@ -18,21 +21,42 @@ export class UsersSettingsFormComponent implements OnInit {
   };
 
   userSettings: IUserSettings ={...this.OriginaluserSettings}//copia de seguridad
+  postError:boolean=false;
+  postErrorMessage:string="";
+  subscriptionTypes:Observable<string[]>;
 
-  constructor() { }
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.subscriptionTypes=this.dataService.getSubscriptionTypes();
   }
 
-  onBlur(field:NgModel){
+  onBlur(field: NgModel){
     console.log("in onBlur" ,field.valid);
     
   }
 
-  onSubmit(form:NgForm){
-   console.log("in onSubmit: ", form.valid); 
+  onHttpError(errorResponse:any){
+    console.log("Error: ",errorResponse);
+    this.postError=true;
+    this.postErrorMessage = errorResponse.error.errorMessage;
   }
 
+  onSubmit(form: NgForm){
+   console.log("in onSubmit: ", form.valid);
+
+   if(form.valid){ 
+   this.dataService.postUserSettingsForm(this.userSettings).subscribe(
+     result=> console.log('success: ', result),
+     error=>this.onHttpError(error)
+     );
+  }
+  else{
+    this.postError=true;
+    this.postErrorMessage="please fix the above errors"
+  }
+  }
+}
   
 
-}
