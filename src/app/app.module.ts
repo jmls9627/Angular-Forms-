@@ -5,7 +5,11 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import{UsersSettingsFormComponent } from './users-settings-form/users-settings-form.component';
-
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,11 @@ import{UsersSettingsFormComponent } from './users-settings-form/users-settings-f
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    
+    ButtonsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot(),
+    BrowserAnimationsModule,
+    RatingModule.forRoot(),
     
   ],
   providers: [],

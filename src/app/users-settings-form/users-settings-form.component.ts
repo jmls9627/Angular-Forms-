@@ -5,6 +5,7 @@ import { DataService } from '../data/data.service';
 import { IUserSettings } from '../data/user-settings';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-users-settings-form',
   templateUrl: './users-settings-form.component.html',
@@ -24,12 +25,19 @@ export class UsersSettingsFormComponent implements OnInit {
   postError:boolean=false;
   postErrorMessage:string="";
   subscriptionTypes:Observable<string[]>;
-
+  singleModel:string="On";
+  startDate:Date;
+  startTime:Date;
+  userRating:number=0;
+  maxRating:number=10;
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.subscriptionTypes=this.dataService.getSubscriptionTypes();
+
+    this.startDate=new Date();
+    this.startTime=new Date();
   }
 
   onBlur(field: NgModel){
@@ -44,9 +52,9 @@ export class UsersSettingsFormComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-   console.log("in onSubmit: ", form.valid);
+   console.log("in onSubmit: ", form.value);
 
-   if(form.valid){ 
+  /* if(form.valid){ 
    this.dataService.postUserSettingsForm(this.userSettings).subscribe(
      result=> console.log('success: ', result),
      error=>this.onHttpError(error)
@@ -55,7 +63,7 @@ export class UsersSettingsFormComponent implements OnInit {
   else{
     this.postError=true;
     this.postErrorMessage="please fix the above errors"
-  }
+  }*/
   }
 }
   
